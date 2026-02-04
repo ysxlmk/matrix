@@ -7,6 +7,8 @@
 #
 
 cmake_minimum_required(VERSION 3.4.1)
+# 16KB page size alignment for Android
+add_link_options(-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384)
 
 # We called it SQLiteLint which is to find improper usages of SQLite3
 project(SQLiteLint)

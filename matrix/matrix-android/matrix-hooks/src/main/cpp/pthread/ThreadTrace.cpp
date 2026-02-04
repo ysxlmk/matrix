@@ -19,6 +19,7 @@
 //
 
 #include <dlfcn.h>
+#include <cassert>
 #include <unordered_map>
 #include <cxxabi.h>
 #include <sstream>

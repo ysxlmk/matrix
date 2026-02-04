@@ -43,7 +43,7 @@ target_include_directories(
 
 target_compile_options(
   ${TARGET}
-  PRIVATE -Wall -Wextra -Werror -Wno-unused-function
+  PRIVATE -Wall -Wextra -Werror -Wno-unused-function -Wno-deprecated-declarations
   PRIVATE $<$<COMPILE_LANGUAGE:C>:-std=c17>
   PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-std=c++17>
   PUBLIC -fvisibility=hidden -fno-exceptions -fno-rtti -fdata-sections -ffunction-sections

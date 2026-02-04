@@ -27,13 +27,13 @@ include ':matrix-memguard'
 include ':matrix-jectl'
 include ':matrix-fd'
 
-// Benchmark
-include ':test:matrix-backtrace-benchmark'
+// Benchmark (disabled for 16KB build)
+// include ':test:matrix-backtrace-benchmark'
 
-// TEST
-include ':test:test-backtrace'
-include ':test:test-memoryhook'
-include ':test:test-openglhook'
+// TEST (disabled for 16KB build)
+// include ':test:test-backtrace'
+// include ':test:test-memoryhook'
+// include ':test:test-openglhook'
 include ':matrix-memory-canary'
 
 if (gradle.staticLinkCXX()) {

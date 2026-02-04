@@ -4,6 +4,67 @@
 [![WeChat Approved](https://img.shields.io/badge/Wechat%20Approved-2.0.8-red.svg)](https://github.com/Tencent/matrix/wiki)
 [![CircleCI](https://circleci.com/gh/Tencent/matrix.svg?style=shield)](https://app.circleci.com/pipelines/github/Tencent/matrix)
 
+---
+
+# Android 16KB Page Size Support
+
+This branch (`v2.0.8-16kb`) adds support for Android 16KB page size devices (Android 15+).
+
+## Changes Overview
+
+### Build Environment Updates
+- **NDK**: Upgraded to 27.0.12077973 (NDK 27+ supports 16KB alignment by default)
+- **Gradle**: Upgraded to 7.5
+- **Android Gradle Plugin**: Upgraded to 7.4.2
+- **Kotlin**: Upgraded to 1.6.21
+
+### Key Modifications
+
+1. **CMakeLists.txt** - Added 16KB alignment linker options to all native modules:
+   ```cmake
+   add_link_options(-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384)
+   ```
+
+2. **build.gradle** - Added NDK version specification to modules with native code:
+   ```gradle
+   android {
+       ndkVersion "27.0.12077973"
+   }
+   ```
+
+3. **Code Compatibility Fixes**:
+   - Added missing headers (`<cassert>`, `<utility>`) for NDK 27 compatibility
+   - Fixed version script files (`.ver`) to remove undefined symbols
+   - Added `-Wno-deprecated-declarations` flag where needed
+
+### Affected Modules
+- matrix-android-commons
+- matrix-backtrace
+- matrix-hooks
+- matrix-fd
+- matrix-io-canary
+- matrix-mallctl
+- matrix-memguard
+- matrix-opengl-leak
+- matrix-trace-canary
+- matrix-traffic
+- matrix-resource-canary-android
+- matrix-sqlite-lint-android-sdk
+
+### Verify 16KB Alignment
+
+```bash
+$ANDROID_NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-readelf -l <your.so> | grep LOAD
+```
+
+Expected output should show alignment value `0x4000` (16384 = 16KB).
+
+### References
+- [Android 16KB Page Size Support](https://developer.android.com/guide/practices/page-sizes)
+- [NDK r27 Release Notes](https://developer.android.com/ndk/downloads/revision_history)
+
+---
+
 (中文版本请参看[这里](#matrix_cn))  
 
 [Matrix for iOS/macOS 中文版](#matrix_ios_cn)  

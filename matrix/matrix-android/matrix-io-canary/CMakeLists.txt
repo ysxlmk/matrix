@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.4.1)
+# 16KB page size alignment for Android
+add_link_options(-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384)
 
 project(IOCanary)
 
